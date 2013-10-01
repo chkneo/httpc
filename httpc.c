@@ -66,7 +66,7 @@ parseData(FILE *fp)
 int
 main (int argc, char **argv)
 {
-    int i=0, j, opt, port, sockfd, cpl, bytes_recieved, flag=1;
+    int i=0, j, opt, port, sockfd, cpl, bytes_recieved, bytes_sent, flag=1;
     unsigned int delay = DEFAULT_DELAY;
     unsigned int count = DEFAULT_COUNT;
     char *hostname=NULL;
@@ -156,10 +156,11 @@ main (int argc, char **argv)
         for(j=0;j<=i;j++) {
             printf("--------------------------------------\n");
             printf("%s\n",request[j]); 
+            bytes_sent=send(sockfd, request[j], strlen(request[j]), 0);
+            printf("%d", bytes_sent);
             printf("--------------------------------------\n");
             sleep(delay);
         }
-
         bytes_recieved = 0;
         while(1) {
             bytes_recieved=recv(sockfd,recv_data,1024, 0);
